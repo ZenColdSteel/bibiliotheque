@@ -39,7 +39,7 @@ export async function updateLivreRepo(
     const db = await getDBConnection();
     const result = await db.run(
         "UPDATE LIVRE SET ISBN = ?, Titre = ?, Annee_Publication = ?, ID_Auteur = ? WHERE ID = ?",
-        [isbn, titre, annee_publication, id_auteur, id], // Ajout de l'ID ici
+        [isbn, titre, annee_publication, id_auteur, id], // On passe les arguments ici
     );
     if (result.changes === 0) return null;
     return { id, isbn, titre, annee_publication, id_auteur };

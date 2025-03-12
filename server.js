@@ -21,8 +21,7 @@ const server = http.createServer((req, res) => {
     }
 
     // Log incoming request
-
-    //ajouter le logger ici
+    logger.info(`Incoming request: ${req.method} ${req.url}`);
 
     // Route the request
     routes(req, res);

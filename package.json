@@ -1,17 +1,23 @@
 {
     "name": "bibiliotheque",
     "version": "1.0.0",
-    "description": "",
-    "main": "index.js",
+    "description": "API REST pour gérer une bibliothèque avec Node.js et SQLite",
+    "main": "server.js",
+    "type": "module",
     "scripts": {
         "test": "echo \"Error: no test specified\" && exit 1",
-        "dev": "node init.js"
+        "dev": "node --watch server.js"
     },
-    "keywords": [],
-    "author": "",
+    "keywords": [
+        "node",
+        "api",
+        "sqlite",
+        "bibliothèque"
+    ],
+    "author": "Ton Nom",
     "license": "ISC",
-    "type": "commonjs",
     "dependencies": {
+        "sqlite": "^5.1.1",
         "sqlite3": "^5.1.7"
     }
 }
