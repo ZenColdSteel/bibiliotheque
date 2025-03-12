@@ -14,6 +14,7 @@ import {
     getLivresByAuteurService,
     createLivreService,
     updateLivreService,
+    deleteLivreService,
 } from "../services/livreService.js";
 import { sendJsonResponse, sendErrorResponse } from "../utils/httpHelper.js";
 
@@ -95,6 +96,17 @@ export const livreController = {
             sendJsonResponse(res, 200, updatedLivre);
         } catch (error) {
             console.error("Error updating livre:", error);
+            sendErrorResponse(res, 400, error.message);
+        }
+    },
+    async deleteLivre(req, res) {
+        try {
+            const { id } = req.params;
+            await deleteLivreService(id);
+            sendJsonResponse(res, 200, {
+                message: "Livre supprimé avec succès",
+            });
+        } catch (error) {
             sendErrorResponse(res, 400, error.message);
         }
     },

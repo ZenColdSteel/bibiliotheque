@@ -44,3 +44,26 @@ export async function updateLivreRepo(
     if (result.changes === 0) return null;
     return { id, isbn, titre, annee_publication, id_auteur };
 }
+// export async function deleteLivreRepo(id) {
+//     const db = await getDBConnection();
+//     const result = await db.run("DELETE FROM LIVRE WHERE ID = ?", [id]);
+//     return result.changes === 1;
+// }
+export async function deleteLivreRepo(id) {
+    try {
+        const db = await getDBConnection();
+        await db.run("DELETE FROM EXEMPLAIRE WHERE ID_livres = ?", [id]);
+        await db.run("DELETE FROM LIVRE_CATEGORIE WHERE ID_livres= ?", [id]);
+        const result = await db.run("DELETE FROM livre WHERE id = ?", [id]);
+
+        if (result.changes === 0) {
+            throw new Error("Livre introuvable ou déjà supprimé");
+        }
+
+        return true;
+    } catch (error) {
+        throw new Error(
+            "Erreur lors de la suppression du livre: " + error.message,
+        );
+    }
+}

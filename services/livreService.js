@@ -4,6 +4,7 @@ import {
     getLivreByAuteurRepo,
     createLivreRepo,
     updateLivreRepo,
+    deleteLivreRepo,
 } from "../repositories/livreRepository.js";
 
 /**
@@ -92,4 +93,13 @@ export async function updateLivreService(
         throw new Error("Livre non trouvé ou mise à jour impossible");
 
     return updatedLivre;
+}
+
+export async function deleteLivreService(id) {
+    if (!id) throw new Error("L'ID du livre est requis");
+
+    const deleted = await deleteLivreRepo(id);
+    if (!deleted) throw new Error("Livre introuvable ou déjà supprimé");
+
+    return deleted;
 }
