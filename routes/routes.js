@@ -1,4 +1,5 @@
 import { livreController } from "../controllers/livreController.js";
+import { auteurController } from "../controllers/auteurController.js";
 import { logger } from "../utils/logger.js";
 export const routes = (req, res) => {
     const url = req.url;
@@ -7,6 +8,8 @@ export const routes = (req, res) => {
     // Routes pour les livres
     const livreIdMatch = url.match(/^\/api\/livres\/([0-9]+)$/);
     const livreId = livreIdMatch ? parseInt(livreIdMatch[1]) : null;
+    const auteurIdMatch = url.match(/^\/api\/auteurs\/([0-9]+)$/);
+    const auteurId = auteurIdMatch ? parseInt(auteurIdMatch[1]) : null;
 
     if (url === "/api/livres" && method === "GET") {
         livreController.getAllLivres(req, res);
@@ -22,17 +25,26 @@ export const routes = (req, res) => {
         req.params = { id: livreId }; // Ajoute l'ID aux params de la requête
         livreController.deleteLivre(req, res);
     }
-    // Routes pour les auteurs (à implémenter)
+    // Routes pour les auteurs
     else if (url === "/api/auteurs" && method === "GET") {
-        auteurController.getAllAuteurs(req, res);
+        auteurController.getAllAuteur(req, res);
+    } else if (url === "/api/auteurs" && method === "POST") {
+        auteurController.createAuteur(req, res);
+    } else if (auteurId && method === "GET") {
+        req.params = { id: auteurId }; // Ajoute l'ID aux params de la requête
+        auteurController.getAuteurById(req, res);
+    } else if (auteurId && method === "PUT") {
+        req.params = { id: auteurId }; // Ajoute l'ID aux params de la requête
+        auteurController.updateAuteur(req, res);
+    } else if (auteurId && method === "DELETE") {
+        req.params = { id: auteurId }; // Ajoute l'ID aux params de la requête
+        auteurController.deleteAuteur(req, res);
     }
-    // Autres routes auteurs...
 
-    // Routes pour les emprunts (à implémenter)
+    // Routes pour les emprunts
     else if (url === "/api/emprunts" && method === "GET") {
         empruntController.getAllEmprunts(req, res);
     }
-    // Autres routes emprunts...
 
     // Route non trouvée
     else {
