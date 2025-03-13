@@ -1,5 +1,5 @@
 import { getDBConnection } from "../config/database.js";
-
+import { Livre } from "../models/Livre.js"; // Importez Livre from "../models/Livre.js";
 export async function getAllLivreRepo() {
     const db = await getDBConnection();
     return db.all("SELECT * FROM LIVRE");
@@ -26,7 +26,8 @@ export async function createLivreRepo(
         "INSERT INTO LIVRE (ISBN, Titre, Annee_Publication, ID_Auteur) VALUES (?, ?, ?, ?)",
         [isbn, titre, annee_publication, id_auteur],
     );
-    return { id: result.lastID, isbn, titre, annee_publication, id_auteur };
+
+    return new Livre(result.lastID, isbn, titre, annee_publication, id_auteur);
 }
 
 export async function updateLivreRepo(

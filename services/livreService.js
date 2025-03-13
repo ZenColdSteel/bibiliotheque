@@ -1,3 +1,4 @@
+import { Livre } from "../models/Livre.js";
 import {
     getAllLivreRepo,
     getLivreByIdRepo,
@@ -43,19 +44,16 @@ export async function createLivreService(
     annee_publication,
     id_auteur,
 ) {
-    if (!isbn || !titre || !annee_publication || !id_auteur) {
-        throw new Error("Tous les champs sont requis");
-    }
-
-    if (
-        isNaN(annee_publication) ||
-        annee_publication < 1000 ||
-        annee_publication > new Date().getFullYear()
-    ) {
-        throw new Error("L'année de publication est invalide");
-    }
-
-    return await createLivreRepo(isbn, titre, annee_publication, id_auteur);
+    const nouveauLivre = new Livre(
+        null,
+        isbn,
+        titre,
+        annee_publication,
+        id_auteur,
+    );
+    console.log("nouveauLivre", nouveauLivre);
+    await createLivreRepo(nouveauLivre);
+    return;
 }
 
 /**
