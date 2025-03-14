@@ -52,8 +52,13 @@ export const livreController = {
 
     async createLivre(req, res) {
         try {
-            const { isbn, titre, annee_publication, id_auteur } =
-                await parseBody(req);
+            const {
+                ISBN: isbn,
+                Titre: titre,
+                Annee_Publication: annee_publication,
+                ID_Auteur: id_auteur,
+            } = await parseBody(req);
+            console.log(isbn, titre, annee_publication, id_auteur);
             const newLivre = await createLivreService(
                 isbn,
                 titre,
@@ -110,4 +115,16 @@ export const livreController = {
             sendErrorResponse(res, 400, error.message);
         }
     },
+    // async getLivresByCategorieController(req, res) {
+    //     try {
+    //         const { categorie } = req.query; // Récupère le paramètre de la catégorie depuis la query string
+    //         if (!categorie)
+    //             throw new Error("Le paramètre 'categorie' est requis");
+
+    //         const livres = await getLivresByCategorieService(categorie);
+    //         sendJsonResponse(res, 200, livres);
+    //     } catch (error) {
+    //         sendErrorResponse(res, 400, error.message);
+    //     }
+    // },
 };

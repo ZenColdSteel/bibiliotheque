@@ -15,12 +15,19 @@ export async function getLivreByAuteurRepo(id_auteur) {
     return db.all("SELECT * FROM LIVRE WHERE ID_Auteur = ?", [id_auteur]);
 }
 
-export async function createLivreRepo(
+/**
+ * Cr e un nouveau livre avec validation
+ * @param {Livre} nouveauLivre Instance de Livre
+ * @returns {Promise<Livre>} Instance de Livre avec l'ID du livre cr e
+ */
+export async function createLivreRepo({
     isbn,
     titre,
     annee_publication,
     id_auteur,
-) {
+}) {
+    console.log(isbn, titre, annee_publication, id_auteur);
+    console.log(isbn);
     const db = await getDBConnection();
     const result = await db.run(
         "INSERT INTO LIVRE (ISBN, Titre, Annee_Publication, ID_Auteur) VALUES (?, ?, ?, ?)",
@@ -68,3 +75,13 @@ export async function deleteLivreRepo(id) {
         );
     }
 }
+// export async function getLivresByCategorieRepo(categorieId) {
+//     const db = await getDBConnection();
+//     return db.all(
+//         `
+//         SELECT * FROM LIVRE
+//         INNER JOIN LIVRE_CATEGORIE ON LIVRE.ID = LIVRE_CATEGORIE.ID_LIVRES
+//         WHERE LIVRE_CATEGORIE.ID_CATEGORIES = ?`,
+//         [categorieId],
+//     );
+// }
