@@ -6,6 +6,7 @@ import {
     createLivreRepo,
     updateLivreRepo,
     deleteLivreRepo,
+    getLivresByCategorieRepo,
 } from "../repositories/livreRepository.js";
 /**
  * Récupère tous les livres
@@ -51,8 +52,6 @@ export async function createLivreService(
         annee_publication,
         id_auteur,
     );
-    console.log("nouveauLivre", nouveauLivre.estValide());
-    console.log("nouveauLivre", nouveauLivre);
     await createLivreRepo(nouveauLivre);
     return;
 }
@@ -101,8 +100,9 @@ export async function deleteLivreService(id) {
 
     return deleted;
 }
-// export async function getLivresByCategorieService(categorieId) {
-//     if (!categorieId) throw new Error("L'ID de la catégorie est requis");
+export async function getLivresByCategorieService(categorie) {
+    console.log("categorie", categorie);
+    if (!categorie) throw new Error("L'ID de la catégorie est requis");
 
-//     return await getLivresByCategorieRepo(categorieId);
-// }
+    return await getLivresByCategorieRepo(categorie);
+}

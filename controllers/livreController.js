@@ -15,6 +15,7 @@ import {
     createLivreService,
     updateLivreService,
     deleteLivreService,
+    getLivresByCategorieService,
 } from "../services/livreService.js";
 import { sendJsonResponse, sendErrorResponse } from "../utils/httpHelper.js";
 
@@ -58,7 +59,6 @@ export const livreController = {
                 Annee_Publication: annee_publication,
                 ID_Auteur: id_auteur,
             } = await parseBody(req);
-            console.log(isbn, titre, annee_publication, id_auteur);
             const newLivre = await createLivreService(
                 isbn,
                 titre,
@@ -115,16 +115,18 @@ export const livreController = {
             sendErrorResponse(res, 400, error.message);
         }
     },
-    // async getLivresByCategorieController(req, res) {
-    //     try {
-    //         const { categorie } = req.query; // Récupère le paramètre de la catégorie depuis la query string
-    //         if (!categorie)
-    //             throw new Error("Le paramètre 'categorie' est requis");
+    async getLivreByCategorie(req, res) {
+        try {
+            const { categorie = null } = req.params; // Récupère le paramètre de la catégorie depuis la query string
+            console.log("categorie", categorie);
+            if (!categorie)
+                throw new Error("Le paramètre 'categorie' est requis");
 
-    //         const livres = await getLivresByCategorieService(categorie);
-    //         sendJsonResponse(res, 200, livres);
-    //     } catch (error) {
-    //         sendErrorResponse(res, 400, error.message);
-    //     }
-    // },
+            const livres = await getLivresByCategorieService(categorie);
+            console.log("livres", livres);
+            sendJsonResponse(res, 200, livres);
+        } catch (error) {
+            sendErrorResponse(res, 400, error.message);
+        }
+    },
 };

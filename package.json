@@ -6,7 +6,8 @@
     "type": "module",
     "scripts": {
         "test": "echo \"Error: no test specified\" && exit 1",
-        "dev": "node --watch server.js"
+        "dev": "node --watch server.js",
+        "oui": "jest"
     },
     "keywords": [
         "node",
@@ -19,5 +20,8 @@
     "dependencies": {
         "sqlite": "^5.1.1",
         "sqlite3": "^5.1.7"
+    },
+    "devDependencies": {
+        "jest": "^29.7.0"
     }
 }
